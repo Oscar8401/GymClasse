@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UserManagement.Models
 {
@@ -8,6 +10,12 @@ namespace UserManagement.Models
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+        //Adding RegistrtationTime
+        public string FName { get; set; }
+        public string LName { get; set; }
+        public string FullName { get { return FName + " " + LName; } }
+        [Column(TypeName = "datetime2")]
+        public DateTime TimeOfRegistration { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -79,6 +87,16 @@ namespace UserManagement.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+
+
+        //
+        public string FName { get; set; }
+        public string LName { get; set; }
+        public string FullName { get { return FName + " " + LName; } }
+        [Column(TypeName = "datetime2")]
+        public DateTime TimeOfRegistration { get; set; }
+
     }
 
     public class ResetPasswordViewModel
@@ -109,4 +127,5 @@ namespace UserManagement.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
 }

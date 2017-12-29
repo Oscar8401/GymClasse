@@ -3,6 +3,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UserManagement.Models
 {
@@ -16,10 +19,21 @@ namespace UserManagement.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        //Adding RegistrtationTime
+        public string FName { get; set; }
+        public string LName { get; set; }
+        public string FullName { get { return FName + " " + LName; } }
+        [Column(TypeName = "datetime2")]
+        public DateTime TimeOfRegistration { get; set; }
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        //Adding the table to the database.
+        public DbSet<GymClass> GymClasses { get; set; }
+        public virtual ICollection<GymClass> AttendedClasses { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -30,4 +44,5 @@ namespace UserManagement.Models
             return new ApplicationDbContext();
         }
     }
+    
 }
